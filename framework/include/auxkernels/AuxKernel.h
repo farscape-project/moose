@@ -9,8 +9,6 @@
 
 #pragma once
 
-#include "MooseObject.h"
-#include "MooseVariableFE.h"
 #include "SetupInterface.h"
 #include "CoupleableMooseVariableDependencyIntermediateInterface.h"
 #include "MaterialPropertyInterface.h"

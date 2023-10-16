@@ -15,8 +15,6 @@
 #include "CoupleableMooseVariableDependencyIntermediateInterface.h"
 #include "MaterialPropertyInterface.h"
 #include "GeometricSearchInterface.h"
-#include "MooseVariableField.h"
-#include "MooseVariableInterface.h"
 #include "BlockRestrictable.h"
 
 /**

@@ -10,7 +10,6 @@
 #pragma once
 
 // MOOSE includes
-#include "Moose.h"
 #include "Parser.h"
 #include "ActionWarehouse.h"
 #include "Factory.h"
@@ -29,7 +28,6 @@
 
 #include "libmesh/parallel_object.h"
 #include "libmesh/mesh_base.h"
-#include "libmesh/point.h"
 
 // C++ includes
 #include <list>

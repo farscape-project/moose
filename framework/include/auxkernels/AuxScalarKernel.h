@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include "MooseObject.h"
 #include "ScalarCoupleable.h"
 #include "SetupInterface.h"
 #include "FunctionInterface.h"

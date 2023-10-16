@@ -10,8 +10,6 @@
 #pragma once
 
 #include "ThreadedElementLoop.h"
-// libMesh includes
-#include "libmesh/elem_range.h"
 
 class NonlinearSystem;
 

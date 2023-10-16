@@ -9,9 +9,7 @@
 
 #pragma once
 
-#include "MooseHashing.h"
 #include "TheWarehouse.h"
-#include "Moose.h"
 
 #include <ostream>
 #include <tuple>

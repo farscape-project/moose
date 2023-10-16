@@ -11,7 +11,6 @@
 
 // MOOSE
 #include "ResidualObject.h"
-#include "ParallelUniqueId.h"
 #include "DistributionInterface.h"
 #include "GeometricSearchInterface.h"
 #include "BoundaryRestrictableRequired.h"

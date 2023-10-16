@@ -18,8 +18,6 @@
 #include "TwoMaterialPropertyInterface.h"
 #include "ElementIDInterface.h"
 
-#include "Assembly.h"
-
 #define usingDGKernelBaseMembers                                                                   \
   usingNeighborCoupleableMembers;                                                                  \
   usingFunctionInterfaceMembers;                                                                   \

@@ -10,7 +10,6 @@
 #pragma once
 
 #include "MaterialAuxBase.h"
-#include "RankTwoTensor.h"
 
 template <bool>
 class MaterialRankTwoTensorAuxTempl;

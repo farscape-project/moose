@@ -11,8 +11,6 @@
 
 #include "IntegratedBC.h"
 
-#include "libmesh/vector_value.h"
-
 /**
  * Implements a flux boundary condition grad(u).n = V.n, where the
  * vector V is specifed by the user. This differs from NeumannBC,

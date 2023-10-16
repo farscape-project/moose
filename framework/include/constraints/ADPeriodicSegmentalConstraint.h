@@ -12,7 +12,6 @@
 #include "ADMortarScalarBase.h"
 #include "DerivativeMaterialInterface.h"
 #include "MooseVariableScalar.h"
-#include "Assembly.h"
 
 /**
  * This class enforces a periodic boundary condition between a microscale and macroscale field.

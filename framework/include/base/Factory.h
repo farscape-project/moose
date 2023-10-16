@@ -15,7 +15,6 @@
 
 // MOOSE includes
 #include "Registry.h"
-#include "MooseObject.h"
 #include "MooseTypes.h"
 #include "FileLineInfo.h"
 

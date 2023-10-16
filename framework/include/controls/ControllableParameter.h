@@ -11,8 +11,6 @@
 
 // MOOSE includes
 #include "InputParameters.h"
-#include "MooseObjectName.h"
-#include "MooseObjectParameterName.h"
 #include "ControllableItem.h"
 
 /**

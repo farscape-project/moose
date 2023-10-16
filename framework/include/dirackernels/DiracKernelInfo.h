@@ -9,7 +9,6 @@
 
 #pragma once
 
-#include "Moose.h"
 #include "MooseTypes.h"
 
 #include <set>

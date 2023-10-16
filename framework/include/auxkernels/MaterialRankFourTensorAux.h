@@ -10,7 +10,6 @@
 #pragma once
 
 #include "MaterialAuxBase.h"
-#include "RankFourTensor.h"
 
 /**
  * MaterialRankFourTensorAux is designed to take the data in the RankFourTensor material

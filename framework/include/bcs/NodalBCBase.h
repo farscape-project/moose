@@ -10,7 +10,6 @@
 #pragma once
 
 #include "BoundaryCondition.h"
-#include "RandomInterface.h"
 #include "CoupleableMooseVariableDependencyIntermediateInterface.h"
 
 // libMesh forward declarations

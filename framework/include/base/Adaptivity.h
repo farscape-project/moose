@@ -13,10 +13,8 @@
 
 #ifdef LIBMESH_ENABLE_AMR
 
-#include "Moose.h"
 #include "MooseError.h"
 #include "ConsoleStreamInterface.h"
-#include "MooseTypes.h"
 #include "PerfGraphInterface.h"
 
 #include "libmesh/parallel_object.h"

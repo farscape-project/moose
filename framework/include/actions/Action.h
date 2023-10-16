@@ -12,10 +12,8 @@
 #include "InputParameters.h"
 #include "ConsoleStreamInterface.h"
 #include "MeshMetaDataInterface.h"
-#include "Registry.h"
 #include "PerfGraphInterface.h"
 #include "DataFileInterface.h"
-#include "MooseObjectParameterName.h"
 
 #include "libmesh/parallel_object.h"
 

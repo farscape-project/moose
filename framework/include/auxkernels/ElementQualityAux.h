@@ -11,8 +11,6 @@
 
 #include "AuxKernel.h"
 
-#include "libmesh/enum_elem_quality.h"
-
 /**
  * Calculates element quality for each element
  */
