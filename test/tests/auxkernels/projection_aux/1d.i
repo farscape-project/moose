@@ -8,33 +8,12 @@
 []
 
 [ICs]
-  active = 'constant_elem constant_nodal'
-  [constant_elem]
-    type = ConstantIC
-    variable = base_elem
-    value = 4
-  []
-  [constant_nodal]
-    type = ConstantIC
-    variable = base_nodal
-    value = 3.5
-  []
-  [linear_elem]
-    type = FunctionIC
-    variable = base_elem
-    function = 2+2*x
-  []
-  [linear_nodal]
-    type = FunctionIC
-    variable = base_nodal
-    function = 3+3*x
-  []
-  [quadratic_elem]
+  [function_elem]
     type = FunctionIC
     variable = base_elem
     function = 2+2*x*x
   []
-  [quadratic_nodal]
+  [function_nodal]
     type = FunctionIC
     variable = base_nodal
     function = 3+3*x*x
