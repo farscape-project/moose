@@ -25,9 +25,6 @@ VectorFEWave::validParams()
 
 VectorFEWave::VectorFEWave(const InputParameters & parameters)
   : VectorKernel(parameters),
-    _curl_test(_var.curlPhi()),
-    _curl_phi(_assembly.curlPhi(_var)),
-    _curl_u(_is_implicit ? _var.curlSln() : _var.curlSlnOld()),
     _x_ffn(getFunction("x_forcing_func")),
     _y_ffn(getFunction("y_forcing_func")),
     _z_ffn(getFunction("z_forcing_func"))

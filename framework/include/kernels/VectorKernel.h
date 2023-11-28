@@ -67,15 +67,24 @@ protected:
   /// gradient of the test function
   const VectorVariableTestGradient & _grad_test;
 
+  /// curl of the test function
+  const VectorVariableTestCurl & _curl_test;
+
   /// the current shape functions
   const VectorVariablePhiValue & _phi;
 
   /// gradient of the shape function
   const VectorVariablePhiGradient & _grad_phi;
 
+  /// curl of the shape function
+  const VectorVariablePhiCurl & _curl_phi;
+
   /// Holds the solution at current quadrature points
   const VectorVariableValue & _u;
 
   /// Holds the solution gradient at current quadrature points
   const VectorVariableGradient & _grad_u;
+
+  /// Holds the solution curl at current quadrature points
+  const VectorVariableCurl & _curl_u;
 };

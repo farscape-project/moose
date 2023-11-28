@@ -23,11 +23,7 @@ CurlCurlField::validParams()
 }
 
 CurlCurlField::CurlCurlField(const InputParameters & parameters)
-  : VectorKernel(parameters),
-    _curl_test(_var.curlPhi()),
-    _curl_phi(_assembly.curlPhi(_var)),
-    _curl_u(_is_implicit ? _var.curlSln() : _var.curlSlnOld()),
-    _coeff(getParam<Real>("coeff"))
+  : VectorKernel(parameters), _coeff(getParam<Real>("coeff"))
 {
 }
 
