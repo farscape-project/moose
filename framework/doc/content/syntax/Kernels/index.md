@@ -26,14 +26,26 @@ residual and Jacobian values in the above mentioned functions:
 
 - `_i`, `_j`: indices for the current test and trial shape functions respectively.
 - `_qp`: current quadrature point index.
-- `_u`, `_grad_u`: value and gradient of the variable this Kernel operates on;
-  indexed by `_qp` (i.e. `_u[_qp]`).
+- `_u`, `_grad_u`: value ($u$) and gradient ($\nabla u$) of the variable this Kernel
+  operates on; indexed by `_qp` (i.e. `_u[_qp]`).
 - `_test`, `_grad_test`: value ($\psi$) and gradient ($\nabla \psi$) of the
   test functions at the q-points; indexed by `_i` and then `_qp` (i.e., `_test[_i][_qp]`).
 - `_phi`, `_grad_phi`: value ($\phi$) and gradient ($\nabla \phi$) of the
     trial functions at the q-points; indexed by `_j` and then `_qp` (i.e., `_phi[_j][_qp]`).
 - `_q_point`: XYZ coordinates of the current quadrature point.
 - `_current_elem`: pointer to the current element being operated on.
+
+For kernels working on vector variables, i.e. for those that subclass `VectorKernel`,
+you have access to a few additional member variables:
+
+- `_curl_u`: curl ($\nabla \times \vec{u}$) of the variable this VectorKernel
+  operates on; indexed by `_qp` (i.e. `_curl_u[_qp]`).
+- `_curl_test`: curl ($\nabla \times \vec{\psi}$) of the
+  test functions at the q-points; indexed by `_i` and then `_qp`
+  (i.e., `_curl_test[_i][_qp]`).
+- `_curl_phi`: curl ($\nabla \times \vec{\phi}$) of the
+  trial functions at the q-points; indexed by `_j` and then `_qp`
+  (i.e., `_curl_phi[_j][_qp]`).
 
 ## Optimized Kernel Objects id=optimized
 
