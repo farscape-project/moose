@@ -218,7 +218,7 @@ InputParameters::setDeprecatedVarDocString(const std::string & new_name,
 void
 InputParameters::addCoupledVar(const std::string & name, Real value, const std::string & doc_string)
 {
-  addParam<std::vector<VariableName>>(name, doc_string);
+  addParam<std::vector<VariableName>, Real>(name, value, doc_string);
   _coupled_vars.insert(name);
   _params[name]._coupled_default.assign(1, value);
   _params[name]._have_coupled_default = true;
@@ -1088,6 +1088,13 @@ InputParameters::addDeprecatedParam<std::vector<MooseEnum>>(
 {
   mooseError("You must supply a vector of MooseEnum object(s) and the deprecation string when "
              "using addDeprecatedParam, even if the parameter is not required!");
+}
+
+template <>
+void
+InputParameters::setParamHelper<std::vector<VariableName>, Real>(
+    const std::string & /*name*/, std::vector<VariableName> & /*l_value*/, const Real & /*r_value*/)
+{
 }
 
 template <>

@@ -53,7 +53,6 @@ PorousFlowSinglePhaseBase::validParams()
       "The name of the user object for fluid "
       "properties. Only needed if fluid_properties_type = PorousFlowSingleComponentFluid");
   params.addCoupledVar("mass_fraction_vars",
-                       {},
                        "List of variables that represent the mass fractions.  With only one fluid "
                        "component, this may be left empty.  With N fluid components, the format is "
                        "'f_0 f_1 f_2 ... f_(N-1)'.  That is, the N^th component need not be "

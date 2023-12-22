@@ -1713,6 +1713,10 @@ void InputParameters::addDeprecatedParam<std::vector<MooseEnum>>(
 
 // Forward declare specializations for setParamHelper
 template <>
+void InputParameters::setParamHelper<std::vector<VariableName>, Real>(
+    const std::string & name, std::vector<VariableName> & l_value, const Real & r_value);
+
+template <>
 void InputParameters::setParamHelper<PostprocessorName, Real>(const std::string & name,
                                                               PostprocessorName & l_value,
                                                               const Real & r_value);
