@@ -220,6 +220,9 @@ TaggingInterface::prepareVectorTagInternal(Assembly & assembly,
   _local_re.resize(_re_blocks.empty()
                        ? (_absre_blocks.empty() ? std::size_t(0) : _absre_blocks[0]->size())
                        : _re_blocks[0]->size());
+  _local_rm.resize(_re_blocks.empty()
+                       ? (_absre_blocks.empty() ? std::size_t(0) : _absre_blocks[0]->size())
+                       : _re_blocks[0]->size());
 }
 
 void
@@ -277,6 +280,7 @@ TaggingInterface::prepareMatrixTag(Assembly & assembly, unsigned int ivar, unsig
     _ke_blocks[i] = &assembly.jacobianBlock(ivar, jvar, Assembly::LocalDataKey{}, *mat_vector);
 
   _local_ke.resize(_ke_blocks[0]->m(), _ke_blocks[0]->n());
+  _local_km.resize(_ke_blocks[0]->m(), _ke_blocks[0]->n());
 }
 
 void
@@ -362,6 +366,17 @@ TaggingInterface::accumulateTaggedLocalResidual()
 }
 
 void
+TaggingInterface::setTaggedLocalResidual()
+{
+  for (auto & re : _re_blocks)
+    for (int _i = 0; _i < re->size(); _i++)
+      (*re)(_i) = (*re)(_i) * _local_rm(_i) + _local_re(_i);
+  for (auto & absre : _absre_blocks)
+    for (const auto i : index_range(_local_re))
+      (*absre)(i) = (*absre)(i) * _local_rm(i) + std::abs(_local_re(i));
+}
+
+void
 TaggingInterface::assignTaggedLocalResidual()
 {
   for (auto & re : _re_blocks)
@@ -376,6 +391,33 @@ TaggingInterface::accumulateTaggedLocalMatrix()
 {
   for (auto & ke : _ke_blocks)
     *ke += _local_ke;
+}
+
+void
+TaggingInterface::setTaggedLocalMatrix()
+{
+  std::cout << "BEFORE ke(s):" << std::endl;
+  for (auto & ke : _ke_blocks)
+    for (int _i = 0; _i < ke->m(); _i++)
+    {
+      for (int _j = 0; _j < ke->n(); _j++)
+        std::cout << (*ke)(_i, _j) << " ";
+      std::cout << std::endl;
+    }
+
+  for (auto & ke : _ke_blocks)
+    for (int _i = 0; _i < ke->m(); _i++)
+      for (int _j = 0; _j < ke->n(); _j++)
+        (*ke)(_i, _j) = (*ke)(_i, _j) * _local_km(_i, _j) + _local_ke(_i, _j);
+
+  std::cout << "AFTER ke(s):" << std::endl;
+  for (auto & ke : _ke_blocks)
+    for (int _i = 0; _i < ke->m(); _i++)
+    {
+      for (int _j = 0; _j < ke->n(); _j++)
+        std::cout << (*ke)(_i, _j) << " ";
+      std::cout << std::endl;
+    }
 }
 
 void

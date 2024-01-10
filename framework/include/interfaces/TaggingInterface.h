@@ -177,6 +177,8 @@ protected:
                              unsigned int jvar,
                              Moose::ConstraintJacobianType type);
 
+  void setTaggedLocalResidual();
+
   /**
    * Local residual blocks  will be appended by adding the current local kernel residual.
    * It should be called after the local element vector has been computed.
@@ -188,6 +190,8 @@ protected:
    * It should be called after the local element vector has been computed.
    */
   void assignTaggedLocalResidual();
+
+  void setTaggedLocalMatrix();
 
   /**
    * Local Jacobian blocks  will be appended by adding the current local kernel Jacobian.
@@ -327,10 +331,10 @@ protected:
   SubProblem & _subproblem;
 
   /// Holds local residual entries as they are accumulated by this Kernel
-  DenseVector<Number> _local_re;
+  DenseVector<Number> _local_re, _local_rm;
 
   /// Holds local Jacobian entries as they are accumulated by this Kernel
-  DenseMatrix<Number> _local_ke;
+  DenseMatrix<Number> _local_ke, _local_km;
 
   /// Holds nonlocal Jacobian entries as they are accumulated by this Kernel
   DenseMatrix<Number> _nonlocal_ke;
