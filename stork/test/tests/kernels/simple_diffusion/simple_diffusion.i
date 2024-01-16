@@ -1,8 +1,8 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 10
-  ny = 10
+  nx = 2
+  ny = 2
 []
 
 [Variables]
@@ -18,6 +18,7 @@
 []
 
 [BCs]
+  active = 'left right top'
   [left]
     type = DirichletBC
     variable = u
@@ -29,6 +30,12 @@
     variable = u
     boundary = right
     value = 1
+  []
+  [top]
+    type = DirichletBC
+    variable = u
+    boundary = top
+    value = 3
   []
 []
 

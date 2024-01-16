@@ -9,17 +9,17 @@ k = asin(1)
 [Mesh]
   [gmg]
     type = GeneratedMeshGenerator
-    dim = 3
-    nx = 6
-    ny = 6
-    nz = 6
+    dim = 2
+    nx = 2
+    ny = 2
+    nz = 2
     xmax =  1
     ymax =  1
     zmax =  1
     xmin = -1
     ymin = -1
     zmin = -1
-    elem_type = HEX27
+    elem_type = QUAD9
   []
 []
 
@@ -85,13 +85,31 @@ k = asin(1)
   []
 []
 
+[ICs]
+  active = 'i'
+  [i]
+    type = VectorConstantIC
+    variable = u
+    x_value = 88
+    y_value = 88
+    z_value = 88
+  []
+[]
+
 [BCs]
-  [sides]
+  active = d
+  [p]
     type = VectorDivPenaltyDirichletBC
     variable = u
     function = f
     penalty = 1e8
-    boundary = 'top bottom left right front back'
+    boundary = 'top bottom left right'
+  []
+  [d]
+    type = VectorDirichletBC
+    variable = u
+    values = '77 77 77'
+    boundary = 'top bottom left right'
   []
 []
 

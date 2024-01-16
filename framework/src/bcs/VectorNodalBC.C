@@ -32,8 +32,8 @@ VectorNodalBC::VectorNodalBC(const InputParameters & parameters)
     _current_node(_var.node()),
     _u(_var.nodalValue())
 {
-  if (_var.feType().family != LAGRANGE_VEC)
-    mooseError("Vector nodal boundary conditions only make sense for LAGRANGE_VEC variables");
+  //if (_var.feType().family != LAGRANGE_VEC)
+  //  mooseError("Vector nodal boundary conditions only make sense for LAGRANGE_VEC variables");
   addMooseVariableDependency(mooseVariable());
 }
 
@@ -41,6 +41,10 @@ void
 VectorNodalBC::computeResidual()
 {
   const std::vector<dof_id_type> & dof_indices = _var.dofIndices();
+  for (const auto i : index_range(dof_indices))
+    std::cout << dof_indices[i] << " ";
+  std::cout << std::endl;
+
   if (dof_indices.empty())
     return;
 

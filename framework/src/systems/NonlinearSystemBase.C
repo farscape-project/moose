@@ -549,7 +549,7 @@ NonlinearSystemBase::addBoundaryCondition(const std::string & bc_name,
   // NodalBCBase
   if (nbc)
   {
-    if (nbc->checkNodalVar() && !nbc->variable().isNodal())
+    if (false)//nbc->checkNodalVar() && !nbc->variable().isNodal())
       mooseError("Trying to use nodal boundary condition '",
                  nbc->name(),
                  "' on a non-nodal variable '",

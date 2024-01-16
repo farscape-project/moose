@@ -36,5 +36,12 @@ VectorDirichletBC::VectorDirichletBC(const InputParameters & parameters)
 RealVectorValue
 VectorDirichletBC::computeQpResidual()
 {
+  unsigned int _qp;
+  const QBase * const & _qrule(_assembly.qRuleFace());
+  const MooseArray<Point> & _q_point(_assembly.qPointsFace());
+  const MooseArray<Point> & _normals(_assembly.normals());
+
+  std::cout << _assembly.elem() << " " << _assembly.side() << " " << _assembly.sideElem() << std::endl;
+
   return _u - _values;
 }

@@ -465,7 +465,7 @@ template <typename OutputType>
 const OutputType &
 MooseVariableDataBase<OutputType>::nodalValue(Moose::SolutionState state) const
 {
-  if (isNodal())
+  if (true)
   {
     // Request the correct solution states and data members
     vectorTagDofValue(state);
