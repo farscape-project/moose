@@ -41,12 +41,6 @@ VectorDivDirichletBC::computeResidual()
 {
   prepareVectorTag(_assembly, _var.number());
 
-  for (_qp = 0; _qp < _qrule->n_points(); _qp++)
-    std::cout << _q_point[_qp] << std::endl;
-
-  std::cout << "# test functions: " << _test.size() << std::endl;
-  std::cout << "    current side: " << _current_side << std::endl;
-
   for (_i = 0; _i < _test.size(); _i++)
     _local_rm(_i) = _i != _current_side;
 

@@ -396,28 +396,10 @@ TaggingInterface::accumulateTaggedLocalMatrix()
 void
 TaggingInterface::setTaggedLocalMatrix()
 {
-  std::cout << "BEFORE ke(s):" << std::endl;
-  for (auto & ke : _ke_blocks)
-    for (int _i = 0; _i < ke->m(); _i++)
-    {
-      for (int _j = 0; _j < ke->n(); _j++)
-        std::cout << (*ke)(_i, _j) << " ";
-      std::cout << std::endl;
-    }
-
   for (auto & ke : _ke_blocks)
     for (int _i = 0; _i < ke->m(); _i++)
       for (int _j = 0; _j < ke->n(); _j++)
         (*ke)(_i, _j) = (*ke)(_i, _j) * _local_km(_i, _j) + _local_ke(_i, _j);
-
-  std::cout << "AFTER ke(s):" << std::endl;
-  for (auto & ke : _ke_blocks)
-    for (int _i = 0; _i < ke->m(); _i++)
-    {
-      for (int _j = 0; _j < ke->n(); _j++)
-        std::cout << (*ke)(_i, _j) << " ";
-      std::cout << std::endl;
-    }
 }
 
 void
