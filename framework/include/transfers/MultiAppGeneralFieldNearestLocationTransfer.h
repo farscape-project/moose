@@ -73,6 +73,9 @@ private:
   /// Number of points to consider
   unsigned int _num_nearest_points;
 
+  /// Use distance weighted average (true), or arithmetic mean (false)
+  bool _distance_weighted_average;
+
   /// Whether the source of the values is at nodes (true) or centroids (false) for each variable
   std::vector<bool> _source_is_nodes;
 

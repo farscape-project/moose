@@ -37,6 +37,11 @@ MultiAppGeneralFieldNearestLocationTransfer::validParams()
                                 "Number of nearest source (from) points will be chosen to "
                                 "construct a value for the target point. All points will be "
                                 "selected from the same origin mesh!");
+  params.addParam<bool>("distance_weighted_average",
+                          true,
+                        "Set to true when we want to compute average value "
+                        "of neighbouring points based on distance "
+                        "(rather than simply the mean of all nearby points)");
 
   // Nearest node is historically more an extrapolation transfer
   params.set<Real>("extrapolation_constant") = GeneralFieldTransfer::BetterOutOfMeshValue;
@@ -59,7 +64,8 @@ MultiAppGeneralFieldNearestLocationTransfer::MultiAppGeneralFieldNearestLocation
     const InputParameters & parameters)
   : MultiAppGeneralFieldTransfer(parameters),
     SolutionInvalidInterface(this),
-    _num_nearest_points(getParam<unsigned int>("num_nearest_points"))
+    _num_nearest_points(getParam<unsigned int>("num_nearest_points")),
+    _distance_weighted_average(getParam<bool>("distance_weighted_average"))
 {
   if (_source_app_must_contain_point && _nearest_positions_obj)
     paramError("use_nearest_position",
@@ -320,17 +326,56 @@ MultiAppGeneralFieldNearestLocationTransfer::evaluateInterpValuesNearestNode(
       if (_local_kdtrees[i_from]->numberCandidatePoints())
       {
         point_found = true;
+        // Note that we do not need to use the transformed_pt (in the source app frame)
+        // because the KDTree has been created in the reference frame
         _local_kdtrees[i_from]->neighborSearch(
             pt, _num_nearest_points, return_index, return_dist_sqr);
         Real val_sum = 0, dist_sum = 0;
-        for (auto index : return_index)
+        Real val_sum_dist_weighted = 0.0, inv_dist_sum = 0.0;
+        bool exact_dist_found(false);
+        Real exact_dist_found_val = 0.0;
+        Real exact_dist_found_dist = 0.0;
+        for (const auto index : return_index)
         {
+          Real node_dist = (_local_points[i_from][index] - pt).norm();
+          if (node_dist == 0.0)
+          {
+            exact_dist_found = true;
+            exact_dist_found_dist = node_dist;
+            exact_dist_found_val = _local_values[i_from][index];
+            printf("exact dist found, value is %f \n", exact_dist_found_val);
+          }
           val_sum += _local_values[i_from][index];
-          dist_sum += (_local_points[i_from][index] - pt).norm();
+          val_sum_dist_weighted += _local_values[i_from][index]/node_dist;
+          inv_dist_sum += 1.0/node_dist;
+          dist_sum += node_dist;
         }
-        // Pick the closest
-        if (dist_sum / return_dist_sqr.size() < outgoing_vals[i_pt].second)
-          outgoing_vals[i_pt] = {val_sum / return_index.size(), dist_sum / return_dist_sqr.size()};
+
+        // avoid division by zero, if we find exact match, just keep that point
+        if (exact_dist_found)
+        {
+          const auto new_distance = exact_dist_found_dist;
+          // If the new value found is closer than for other sources, use it
+          if (new_distance < outgoing_vals[i_pt].second)
+            outgoing_vals[i_pt] = {exact_dist_found_val, new_distance};
+
+        }
+        else
+        {
+          const auto new_distance = dist_sum / return_dist_sqr.size();
+          if (_distance_weighted_average)
+          {
+            // If the new value found is closer than for other sources, use it
+            if (new_distance < outgoing_vals[i_pt].second)
+              outgoing_vals[i_pt] = {val_sum_dist_weighted / inv_dist_sum, new_distance};
+          }
+          else
+          {
+            // If the new value found is closer than for other sources, use it
+            if (new_distance < outgoing_vals[i_pt].second)
+              outgoing_vals[i_pt] = {val_sum / return_index.size(), new_distance};
+          }
+        }
       }
     }
 
