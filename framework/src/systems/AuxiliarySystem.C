@@ -354,6 +354,7 @@ AuxiliarySystem::addScalarKernel(const std::string & kernel_name,
 void
 AuxiliarySystem::reinitElem(const Elem * /*elem*/, THREAD_ID tid)
 {
+  std::cout << "AuxiliarySystem::reinitElem()" << std::endl;
   for (auto * var : _nodal_vars[tid])
     var->computeElemValues();
 

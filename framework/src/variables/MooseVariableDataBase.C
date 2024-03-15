@@ -532,7 +532,7 @@ MooseVariableDataBase<OutputType>::fetchDoFValues()
 
   auto n = _dof_indices.size();
   libmesh_assert(n);
-
+  std::cout << "MooseVariableDataBase<OutputType>::fetchDoFValues() " << n << " " << is_transient << " " << _need_u_dot << std::endl;
   if (is_transient)
   {
     if (_need_u_dot || _need_grad_dot || _need_dof_values_dot)

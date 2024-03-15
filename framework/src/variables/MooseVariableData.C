@@ -423,6 +423,7 @@ template <typename OutputType>
 void
 MooseVariableData<OutputType>::computeValues()
 {
+  std::cout << "MooseVariableData<OutputType>::computeValues() " << _dof_indices.size() << " " << _subproblem.isTransient() << " " << _need_u_dot << " " << &_u_dot << std::endl;
   unsigned int num_dofs = _dof_indices.size();
 
   if (num_dofs > 0)
@@ -431,7 +432,6 @@ MooseVariableData<OutputType>::computeValues()
   bool is_transient = _subproblem.isTransient();
   unsigned int nqp = _current_qrule->n_points();
   auto && active_coupleable_matrix_tags = _subproblem.getActiveFEVariableCoupleableMatrixTags(_tid);
-
   for (auto tag : _required_vector_tags)
   {
     if (_need_vector_tag_u[tag])
@@ -965,6 +965,7 @@ template <typename OutputType>
 void
 MooseVariableData<OutputType>::computeMonomialValues()
 {
+  std::cout << "MooseVariableData<OutputType>::computeMonomialValues() " << _dof_indices.size() << " " << _subproblem.isTransient() << " " << _need_u_dot << " " << &_u_dot << std::endl;
   if (_dof_indices.size() == 0)
     return;
 
@@ -977,7 +978,6 @@ MooseVariableData<OutputType>::computeMonomialValues()
 
   bool is_transient = _subproblem.isTransient();
   unsigned int nqp = _current_qrule->n_points();
-
   if (_need_second)
     _second_u.resize(nqp);
 

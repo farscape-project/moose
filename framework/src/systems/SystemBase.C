@@ -328,7 +328,7 @@ SystemBase::prepareLowerD(THREAD_ID tid)
 void
 SystemBase::reinitElem(const Elem * /*elem*/, THREAD_ID tid)
 {
-
+  std::cout << "SystemBase::reinitElem()" << std::endl;
   if (_subproblem.hasActiveElementalMooseVariables(tid))
   {
     const std::set<MooseVariableFieldBase *> & active_elemental_moose_variables =
