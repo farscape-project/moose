@@ -173,7 +173,9 @@ NonlinearSystem::solve()
   {
     // reset solution invalid counter for the time step
     _app.solutionInvalidity().resetSolutionInvalidTimeStep();
+    std::cout << "BEFORE SOLVE" << std::endl;
     _time_integrator->solve();
+    std::cout << "AFTER SOLVE" << std::endl;
     _time_integrator->postSolve();
     _n_iters = _time_integrator->getNumNonlinearIterations();
     _n_linear_iters = _time_integrator->getNumLinearIterations();

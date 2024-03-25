@@ -36,6 +36,7 @@ ImplicitEuler::computeTimeDerivatives()
   computeTimeDerivativeHelper(u_dot, _solution_old);
   u_dot.close();
 
+  std::cout << "ImplicitEuler::computeTimeDerivatives() " << u_dot.sum() << std::endl;
   _du_dot_du = 1.0 / _dt;
 }
 
@@ -45,6 +46,7 @@ ImplicitEuler::computeADTimeDerivatives(DualReal & ad_u_dot,
                                         DualReal & /*ad_u_dotdot*/) const
 {
   computeTimeDerivativeHelper(ad_u_dot, _solution_old(dof));
+  std::cout << "ImplicitEuler::computeADTimeDerivatives() " << std::endl;
 }
 
 void
