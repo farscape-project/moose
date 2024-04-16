@@ -315,8 +315,13 @@ MultiAppGeneralFieldNearestLocationTransfer::evaluateInterpValuesNearestNode(
       if (_nearest_positions_obj && !closestToPosition(i_from, pt))
         continue;
 
-      std::vector<std::size_t> return_index(_num_nearest_points);
-      std::vector<Real> return_dist_sqr(_num_nearest_points);
+      // To prevent possible segfault, check number of nearest points is not greater than
+      // num_candidates
+      unsigned int num_candidates = _local_kdtrees[i_from]->numberCandidatePoints();
+      unsigned int num_search_points_robust = std::min(_num_nearest_points, num_candidates);
+
+      std::vector<std::size_t> return_index(num_search_points_robust);
+      std::vector<Real> return_dist_sqr(num_search_points_robust);
 
       // Check mesh restriction before anything
       if (_source_app_must_contain_point && !inMesh(_from_point_locators[i_from].get(), pt))
@@ -329,7 +334,7 @@ MultiAppGeneralFieldNearestLocationTransfer::evaluateInterpValuesNearestNode(
         // Note that we do not need to use the transformed_pt (in the source app frame)
         // because the KDTree has been created in the reference frame
         _local_kdtrees[i_from]->neighborSearch(
-            pt, _num_nearest_points, return_index, return_dist_sqr);
+            pt, num_search_points_robust, return_index, return_dist_sqr);
         Real val_sum = 0, dist_sum = 0;
         Real val_sum_dist_weighted = 0.0, inv_dist_sum = 0.0;
         bool exact_dist_found(false);
@@ -396,7 +401,9 @@ MultiAppGeneralFieldNearestLocationTransfer::evaluateInterpValuesNearestNode(
         if (_nearest_positions_obj && !closestToPosition(i_from, pt))
           continue;
 
-        unsigned int num_search = _num_nearest_points + 1;
+        unsigned int num_candidates = _local_kdtrees[i_from]->numberCandidatePoints();
+        unsigned int num_search = std::min(_num_nearest_points+1, num_candidates);
+
         std::vector<std::size_t> return_index(num_search);
         std::vector<Real> return_dist_sqr(num_search);
 
