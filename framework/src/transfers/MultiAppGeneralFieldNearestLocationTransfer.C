@@ -343,7 +343,6 @@ MultiAppGeneralFieldNearestLocationTransfer::evaluateInterpValuesNearestNode(
             exact_dist_found = true;
             exact_dist_found_dist = node_dist;
             exact_dist_found_val = _local_values[i_from][index];
-            printf("exact dist found, value is %f \n", exact_dist_found_val);
           }
           val_sum += _local_values[i_from][index];
           val_sum_dist_weighted += _local_values[i_from][index]/node_dist;
