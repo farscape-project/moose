@@ -170,9 +170,11 @@ OptimizeSolve::taoSolve()
   LibmeshPetscCallQ(TaoSetObjectiveRoutine(_tao, objectiveFunctionWrapper, this));
 #endif
 #if !PETSC_VERSION_LESS_THAN(3, 17, 0)
-  LibmeshPetscCallQ(TaoSetObjectiveAndGradient(_tao, NULL, objectiveAndGradientFunctionWrapper, this));
+  LibmeshPetscCallQ(
+      TaoSetObjectiveAndGradient(_tao, NULL, objectiveAndGradientFunctionWrapper, this));
 #else
-  LibmeshPetscCallQ(TaoSetObjectiveAndGradientRoutine(_tao, objectiveAndGradientFunctionWrapper, this));
+  LibmeshPetscCallQ(
+      TaoSetObjectiveAndGradientRoutine(_tao, objectiveAndGradientFunctionWrapper, this));
 #endif
 
   // Set matrix-free version of the Hessian function
@@ -550,7 +552,8 @@ OptimizeSolve::taoALCreate()
   {
     // Create equality vector
     LibmeshPetscCallQ(VecCreate(_my_comm.get(), &_ce));
-    LibmeshPetscCallQ(VecSetSizes(_ce, _obj_function->getNumEqCons(), _obj_function->getNumEqCons()));
+    LibmeshPetscCallQ(
+        VecSetSizes(_ce, _obj_function->getNumEqCons(), _obj_function->getNumEqCons()));
     LibmeshPetscCallQ(VecSetFromOptions(_ce));
     LibmeshPetscCallQ(VecSetUp(_ce));
 
@@ -573,7 +576,8 @@ OptimizeSolve::taoALCreate()
   {
     // Create inequality vector
     LibmeshPetscCallQ(VecCreate(_my_comm.get(), &_ci));
-    LibmeshPetscCallQ(VecSetSizes(_ci, _obj_function->getNumInEqCons(), _obj_function->getNumInEqCons()));
+    LibmeshPetscCallQ(
+        VecSetSizes(_ci, _obj_function->getNumInEqCons(), _obj_function->getNumInEqCons()));
     LibmeshPetscCallQ(VecSetFromOptions(_ci));
     LibmeshPetscCallQ(VecSetUp(_ci));
 
@@ -588,7 +592,8 @@ OptimizeSolve::taoALCreate()
     LibmeshPetscCallQ(MatSetUp(_gradient_i));
 
     // Set the Inequality constraints
-    LibmeshPetscCallQ(TaoSetInequalityConstraintsRoutine(_tao, _ci, inequalityFunctionWrapper, this));
+    LibmeshPetscCallQ(
+        TaoSetInequalityConstraintsRoutine(_tao, _ci, inequalityFunctionWrapper, this));
 
     // Set the Inequality constraints Jacobian
     LibmeshPetscCallQ(TaoSetJacobianInequalityRoutine(

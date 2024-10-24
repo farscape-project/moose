@@ -250,7 +250,9 @@ PetscExternalPartitioner::partitionGraph(const Parallel::Communicator & comm,
       values[i++] = weight;
   }
 
-  LibmeshPetscCallA(comm.get(), MatCreateMPIAdj(comm.get(), num_local_elems, num_elems, xadj, adjncy, values, &dual));
+  LibmeshPetscCallA(
+      comm.get(),
+      MatCreateMPIAdj(comm.get(), num_local_elems, num_elems, xadj, adjncy, values, &dual));
 
   LibmeshPetscCallA(comm.get(), MatPartitioningCreate(comm.get(), &part));
 #if !PETSC_VERSION_LESS_THAN(3, 12, 3)
@@ -289,7 +291,8 @@ PetscExternalPartitioner::partitionGraph(const Parallel::Communicator & comm,
 #endif
   LibmeshPetscCallA(comm.get(), MatPartitioningSetType(part, part_package.c_str()));
   if (part_package == "hierarch")
-    LibmeshPetscCallA(comm.get(), MatPartitioningHierarchicalSetNfineparts(part, num_parts_per_compute_node));
+    LibmeshPetscCallA(comm.get(),
+                      MatPartitioningHierarchicalSetNfineparts(part, num_parts_per_compute_node));
 
   LibmeshPetscCallA(comm.get(), MatPartitioningSetFromOptions(part));
   LibmeshPetscCallA(comm.get(), MatPartitioningApply(part, &is));

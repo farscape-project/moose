@@ -803,7 +803,8 @@ DMMooseGetEmbedding_Private(DM dm, IS * embedding)
 
       LibmeshPetscCallQ(DMCreateGlobalVector(dm, &v));
       LibmeshPetscCallQ(VecGetOwnershipRange(v, &low, &high));
-      LibmeshPetscCallQ(ISCreateStride(((PetscObject)dm)->comm, (high - low), low, 1, &dmm->_embedding));
+      LibmeshPetscCallQ(
+          ISCreateStride(((PetscObject)dm)->comm, (high - low), low, 1, &dmm->_embedding));
     }
   }
   LibmeshPetscCallQ(PetscObjectReference((PetscObject)(dmm->_embedding)));
@@ -840,7 +841,8 @@ DMCreateFieldDecomposition_Moose(
     if (!dinfo._dm)
     {
       LibmeshPetscCallQ(DMCreateMoose(((PetscObject)dm)->comm, *dmm->_nl, dname, &dinfo._dm));
-      LibmeshPetscCallQ(PetscObjectSetOptionsPrefix((PetscObject)dinfo._dm, ((PetscObject)dm)->prefix));
+      LibmeshPetscCallQ(
+          PetscObjectSetOptionsPrefix((PetscObject)dinfo._dm, ((PetscObject)dm)->prefix));
       std::string suffix = std::string("fieldsplit_") + dname + "_";
       LibmeshPetscCallQ(PetscObjectAppendOptionsPrefix((PetscObject)dinfo._dm, suffix.c_str()));
       LibmeshPetscCallQ(DMMooseSetParentDM(dinfo._dm, dmm));
@@ -1225,7 +1227,8 @@ DMView_Moose(DM dm, PetscViewer viewer)
   {
     LibmeshPetscCallQ(PetscObjectGetName((PetscObject)dm, &name));
     LibmeshPetscCallQ(PetscObjectGetOptionsPrefix((PetscObject)dm, &prefix));
-    LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "DM Moose with name %s and prefix %s\n", name, prefix));
+    LibmeshPetscCallQ(
+        PetscViewerASCIIPrintf(viewer, "DM Moose with name %s and prefix %s\n", name, prefix));
     LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "variables:"));
     for (const auto & vit : *(dmm->_var_ids))
     {
@@ -1244,7 +1247,8 @@ DMView_Moose(DM dm, PetscViewer viewer)
       LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "sides:"));
       for (const auto & sit : *(dmm->_side_ids))
       {
-        LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "(%s,%d) ", sit.first.c_str(), sit.second));
+        LibmeshPetscCallQ(
+            PetscViewerASCIIPrintf(viewer, "(%s,%d) ", sit.first.c_str(), sit.second));
       }
       LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "\n"));
     }
@@ -1254,7 +1258,8 @@ DMView_Moose(DM dm, PetscViewer viewer)
       LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "unsides:"));
       for (const auto & sit : *(dmm->_unside_ids))
       {
-        LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "(%s,%d) ", sit.first.c_str(), sit.second));
+        LibmeshPetscCallQ(
+            PetscViewerASCIIPrintf(viewer, "(%s,%d) ", sit.first.c_str(), sit.second));
       }
       LibmeshPetscCallQ(PetscViewerASCIIPrintf(viewer, "\n"));
     }
@@ -1976,8 +1981,8 @@ DMSetFromOptions_Moose(PetscOptions * /*options*/, DM dm) // >= 3.6.0
                                      &dmm->_print_embedding,
                                      LIBMESH_PETSC_NULLPTR));
   PetscOptionsEnd();
-  LibmeshPetscCallQ(DMSetUp_Moose_Pre(dm)); /* Need some preliminary set up because, strangely enough, DMView() is called in
-                    DMSetFromOptions(). */
+  LibmeshPetscCallQ(DMSetUp_Moose_Pre(dm)); /* Need some preliminary set up because, strangely
+                    enough, DMView() is called in DMSetFromOptions(). */
   PetscFunctionReturn(PETSC_SUCCESS);
 }
 

@@ -732,7 +732,8 @@ mooseSlepcEigenFormJacobianA(SNES snes, Vec x, Mat jac, Mat pc, void * ctx)
 
   if (jismffd && eigen_problem->solverParams()._eigen_matrix_vector_mult)
   {
-    LibmeshPetscCallQ(MatMFFDSetFunction(jac, Moose::SlepcSupport::mooseSlepcEigenFormFunctionMFFD, ctx));
+    LibmeshPetscCallQ(
+        MatMFFDSetFunction(jac, Moose::SlepcSupport::mooseSlepcEigenFormFunctionMFFD, ctx));
 
     EPS eps = eigen_nl.getEPS();
 
@@ -1151,7 +1152,8 @@ PCApply_MoosePC(PC pc, Vec x, Vec y)
 
   PetscFunctionBegin;
   LibmeshPetscCallQ(PCGetOperators(pc, &Amat, &Pmat));
-  LibmeshPetscCallQ(PetscObjectQuery((PetscObject)Pmat, "formFunctionCtx", (PetscObject *)&container));
+  LibmeshPetscCallQ(
+      PetscObjectQuery((PetscObject)Pmat, "formFunctionCtx", (PetscObject *)&container));
   if (container)
     LibmeshPetscCallQ(PetscContainerGetPointer(container, &ctx));
   else
@@ -1181,7 +1183,8 @@ PCSetUp_MoosePC(PC pc)
 
   PetscFunctionBegin;
   LibmeshPetscCallQ(PCGetOperators(pc, &Amat, &Pmat));
-  LibmeshPetscCallQ(PetscObjectQuery((PetscObject)Pmat, "formFunctionCtx", (PetscObject *)&container));
+  LibmeshPetscCallQ(
+      PetscObjectQuery((PetscObject)Pmat, "formFunctionCtx", (PetscObject *)&container));
   if (container)
     LibmeshPetscCallQ(PetscContainerGetPointer(container, &ctx));
   else

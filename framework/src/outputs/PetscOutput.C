@@ -244,8 +244,10 @@ PetscOutput::solveSetup()
   // get an updated nonlinear iteration number)
   // Not every Output should register its own DM monitor! Just register one each of nonlinear
   // and linear and dispatch all Outputs from there!
-  LibmeshPetscCallA(_communicator.get(), SNESMonitorSet(snes, petscNonlinearOutput, this, LIBMESH_PETSC_NULLPTR));
-  LibmeshPetscCallA(_communicator.get(), KSPMonitorSet(ksp, petscLinearOutput, this, LIBMESH_PETSC_NULLPTR));
+  LibmeshPetscCallA(_communicator.get(),
+                    SNESMonitorSet(snes, petscNonlinearOutput, this, LIBMESH_PETSC_NULLPTR));
+  LibmeshPetscCallA(_communicator.get(),
+                    KSPMonitorSet(ksp, petscLinearOutput, this, LIBMESH_PETSC_NULLPTR));
 }
 
 Real

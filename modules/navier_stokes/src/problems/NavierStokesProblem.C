@@ -227,10 +227,12 @@ NavierStokesProblem::setupLSCMatrices(KSP schur_ksp)
 
     if (!_L)
       // If this is our first time in this routine, then we create the matrix
-      LibmeshPetscCall(MatCreateSubMatrix(our_parent_L, velocity_is, velocity_is, MAT_INITIAL_MATRIX, &_L));
+      LibmeshPetscCall(
+          MatCreateSubMatrix(our_parent_L, velocity_is, velocity_is, MAT_INITIAL_MATRIX, &_L));
     else
       // Else we reuse the matrix
-      LibmeshPetscCall(MatCreateSubMatrix(our_parent_L, velocity_is, velocity_is, MAT_REUSE_MATRIX, &_L));
+      LibmeshPetscCall(
+          MatCreateSubMatrix(our_parent_L, velocity_is, velocity_is, MAT_REUSE_MATRIX, &_L));
   }
 
   // Get the local index set complement corresponding to the pressure dofs from the velocity dofs
@@ -245,7 +247,8 @@ NavierStokesProblem::setupLSCMatrices(KSP schur_ksp)
       // preconditioner (no LSC), then we must have access to a pressure mass matrix
       mooseAssert(our_parent_Q, "This should be non-null");
       // Create a sub-matrix corresponding to the pressure index set
-      LibmeshPetscCall(MatCreateSubMatrix(our_parent_Q, pressure_is, pressure_is, mat_initialization, &_Q_scale));
+      LibmeshPetscCall(MatCreateSubMatrix(
+          our_parent_Q, pressure_is, pressure_is, mat_initialization, &_Q_scale));
     }
     else if (_have_mass_matrix) // If we don't have a mass matrix and the user has requested scaling
                                 // then the diagonal of A will be used
@@ -255,7 +258,8 @@ NavierStokesProblem::setupLSCMatrices(KSP schur_ksp)
       mooseAssert(our_parent_Q, "This should be non-null");
       // We are not commuting LSC, so we are doing Elman, and the user has passed us a mass matrix
       // tag. In this case we are creating a velocity mass matrix, so we use the velocity index set
-      LibmeshPetscCall(MatCreateSubMatrix(our_parent_Q, velocity_is, velocity_is, mat_initialization, &_Q_scale));
+      LibmeshPetscCall(MatCreateSubMatrix(
+          our_parent_Q, velocity_is, velocity_is, mat_initialization, &_Q_scale));
     }
   };
 
@@ -323,7 +327,8 @@ NavierStokesProblem::setupLSCMatrices(KSP schur_ksp)
       mooseAssert(_Q_scale, "This should be non-null");
       // Attach our scaling/mass matrix to the PETSc object. PETSc will use this during the
       // preconditioner application
-      LibmeshPetscCall(PetscObjectCompose((PetscObject)lsc_pc_pmat, "LSC_Qscale", (PetscObject)_Q_scale));
+      LibmeshPetscCall(
+          PetscObjectCompose((PetscObject)lsc_pc_pmat, "LSC_Qscale", (PetscObject)_Q_scale));
     }
   }
 

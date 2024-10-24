@@ -316,7 +316,8 @@ NonlinearSystem::setupColoringFiniteDifferencedPreconditioner()
   LibmeshPetscCallA(_communicator.get(), MatColoringApply(matcoloring, &iscoloring));
   LibmeshPetscCallA(_communicator.get(), MatColoringDestroy(&matcoloring));
 
-  LibmeshPetscCallA(_communicator.get(), MatFDColoringCreate(petsc_mat->mat(), iscoloring, &_fdcoloring));
+  LibmeshPetscCallA(_communicator.get(),
+                    MatFDColoringCreate(petsc_mat->mat(), iscoloring, &_fdcoloring));
   LibmeshPetscCallA(_communicator.get(), MatFDColoringSetFromOptions(_fdcoloring));
   // clang-format off
   LibmeshPetscCallA(_communicator.get(), MatFDColoringSetFunction(_fdcoloring,
@@ -324,12 +325,14 @@ NonlinearSystem::setupColoringFiniteDifferencedPreconditioner()
                                                                       libMesh::libmesh_petsc_snes_fd_residual,
                                                                   &petsc_nonlinear_solver));
   // clang-format on
-  LibmeshPetscCallA(_communicator.get(), MatFDColoringSetUp(petsc_mat->mat(), iscoloring, _fdcoloring));
-  LibmeshPetscCallA(_communicator.get(), SNESSetJacobian(petsc_nonlinear_solver.snes(),
-                                                         petsc_mat->mat(),
-                                                         petsc_mat->mat(),
-                                                         SNESComputeJacobianDefaultColor,
-                                                         _fdcoloring));
+  LibmeshPetscCallA(_communicator.get(),
+                    MatFDColoringSetUp(petsc_mat->mat(), iscoloring, _fdcoloring));
+  LibmeshPetscCallA(_communicator.get(),
+                    SNESSetJacobian(petsc_nonlinear_solver.snes(),
+                                    petsc_mat->mat(),
+                                    petsc_mat->mat(),
+                                    SNESComputeJacobianDefaultColor,
+                                    _fdcoloring));
   // PETSc >=3.3.0
   LibmeshPetscCallA(_communicator.get(), ISColoringDestroy(&iscoloring));
 }

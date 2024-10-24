@@ -301,7 +301,8 @@ petscNonlinearConverged(SNES snes,
   PetscInt maxf = 0;   // maximum number of function evaluations
 
   // Ask the SNES object about its tolerances.
-  LibmeshPetscCallA(problem.comm().get(), SNESGetTolerances(snes, &atol, &rtol, &stol, &maxit, &maxf));
+  LibmeshPetscCallA(problem.comm().get(),
+                    SNESGetTolerances(snes, &atol, &rtol, &stol, &maxit, &maxf));
 
   // Ask the SNES object about its divergence tolerance.
   PetscReal divtol = 0.; // relative divergence tolerance
@@ -452,7 +453,8 @@ petscSetDefaultKSPNormType(FEProblemBase & problem, KSP ksp)
   for (const auto i : make_range(problem.numSolverSystems()))
   {
     SolverSystem & sys = problem.getSolverSystem(i);
-    LibmeshPetscCallA(problem.comm().get(), KSPSetNormType(ksp, getPetscKSPNormType(sys.getMooseKSPNormType())));
+    LibmeshPetscCallA(problem.comm().get(),
+                      KSPSetNormType(ksp, getPetscKSPNormType(sys.getMooseKSPNormType())));
   }
 }
 
@@ -524,7 +526,9 @@ petscSetDefaults(FEProblemBase & problem)
     // we use the default context provided by PETSc in addition to
     // a few other tests.
     {
-      LibmeshPetscCallA(nl.comm().get(), SNESSetConvergenceTest(snes, petscNonlinearConverged, &problem, LIBMESH_PETSC_NULLPTR));
+      LibmeshPetscCallA(
+          nl.comm().get(),
+          SNESSetConvergenceTest(snes, petscNonlinearConverged, &problem, LIBMESH_PETSC_NULLPTR));
     }
 
     petscSetKSPDefaults(problem, ksp);
