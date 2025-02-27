@@ -52,22 +52,23 @@ k = asin(1)
   [coefficient]
     type = VectorFunctionReaction
     variable = u
-    sign = negative
   []
   [gradient]
     type = GradField
     variable = u
     coupled_scalar_variable = p
+    coeff = -1
   []
   [divergence]
     type = DivField
     variable = p
     coupled_vector_variable = u
+    coeff = -1
   []
   [forcing]
     type = BodyForce
     variable = p
-    function = ${Functions/f/div}
+    function = -${Functions/f/div}
   []
   [mean_zero_p]
     type = ScalarLagrangeMultiplier
@@ -129,8 +130,8 @@ k = asin(1)
 [Executioner]
   type = Steady
   solve_type = LINEAR
-  petsc_options_iname = '-pc_type -ksp_rtol -ksp_norm_type'
-  petsc_options_value = '  jacobi     1e-12 preconditioned'
+  petsc_options_iname = '-ksp_type -pc_type -ksp_rtol -ksp_norm_type'
+  petsc_options_value = '   minres   jacobi     1e-12 preconditioned'
 []
 
 [Outputs]
